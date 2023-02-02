@@ -1,5 +1,5 @@
 **free
-ctl-opt main(Main) dftactgrp(*no) actgrp('ATHREAD');
+ctl-opt main(main) dftactgrp(*no) actgrp('ATHREAD');
 ctl-opt datedit(*dmy/) option(*srcstmt:*nodebugio);
 
 /copy qsysinc/qrpglesrc,pthread        // PThread prototypes
@@ -36,7 +36,7 @@ dcl-proc Main;
       print('Main: start of worker #'+%char(workers(i).parm.num)+' failed with RC='+%char(rc));
     endif;
   endfor;
-  
+
   print('Main: waiting 6 seconds ...');
   sleep(6);
 
@@ -48,7 +48,7 @@ dcl-proc Main;
   for i = 4 downto 1;
     print('Main: joining worker #'+%char(workers(i).parm.num)+' RC='+%char(pthread_join(workers(i).thread:*omit)));
   endfor;
-  
+
   return;
 
   on-exit isAbnormalEnd;
@@ -75,8 +75,8 @@ dcl-proc Worker;
 
   start = %timestamp(*sys:12);
   print('Worker #'+%char(parm.num)+': has thread-id '+getThreadId()+'.');
-  print('Worker #'+%char(parm.num)+': setcalcelstate RC='+%char(pthread_setcanceltype(PTHREAD_CANCEL_ENABLE:i)));
-  print('Worker #'+%char(parm.num)+': setcalceltype RC='+%char(pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS:i)));
+  print('Worker #'+%char(parm.num)+': setcancelstate RC='+%char(pthread_setcancelstate(PTHREAD_CANCEL_ENABLE:i)));
+  print('Worker #'+%char(parm.num)+': setcanceltype RC='+%char(pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS:i)));
 
   for i = 1 to 5;
     print('Worker #'+%char(parm.num)+': waiting '+%char(parm.delay)+' seconds ...');
@@ -131,7 +131,7 @@ dcl-proc print;
   end-pi;
 
   dcl-pr printf extproc('printf');
-    templ pointer value options(*string);
+    template pointer value options(*string);
     dummy pointer options(*nopass);
   end-pr;
 
