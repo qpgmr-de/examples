@@ -1,5 +1,5 @@
 **free
-ctl-opt main(main) dftactgrp(*no) actgrp('ATHREAD');
+ctl-opt main(main) dftactgrp(*no) actgrp('ATHREAD') thread(*concurrent);
 ctl-opt datedit(*dmy/) option(*srcstmt:*nodebugio);
 
 /copy qsysinc/qrpglesrc,pthread        // PThread prototypes
